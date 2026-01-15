@@ -1,0 +1,82 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-cyan: #00bcd4;
+  --color-brand-teal: #0288d1;
+  --color-brand-purple: #8c46ff;
+  --color-brand-dark: #050505;
+  --font-sans: "Poppins", sans-serif;
+  --font-heading: "Roboto", sans-serif;
+  --animate-spin-slow: spin 8s linear infinite;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  /* REMOVED: height: 100%; (This breaks react-scroll) */
+  min-height: 100%; /* Use this instead */
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-brand-dark);
+  color: white;
+  font-family: var(--font-sans);
+  
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  
+  /* REMOVED: scroll-behavior: smooth; 
+     (Let react-scroll handle the smoothing logic to avoid conflicts) */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* SCROLLBAR STYLES (Keep these) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-brand-cyan); }
+
+@layer components {
+  /* ... Keep your existing @layer components code ... */
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-linear-to-r from-brand-cyan via-brand-teal to-brand-purple;
+  }
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl;
+  }
+  .btn-primary {
+    @apply relative px-8 py-3 rounded-full font-bold text-white tracking-wide overflow-hidden transition-all duration-300 cursor-pointer shadow-lg;
+    background: linear-gradient(90deg, #00bcd4 0%, #8c46ff 100%);
+    border: 1px solid rgba(0, 188, 212, 0.3);
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+  }
+  .btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #26c6da 0%, #7c4dff 100%);
+    box-shadow: 0 0 30px rgba(0, 188, 212, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .btn-neon {
+    @apply relative px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm transition-all duration-500 cursor-pointer overflow-hidden text-white;
+    background: transparent;
+    border: 2px solid transparent;
+    background-image: linear-gradient(#050505, #050505), linear-gradient(90deg, #00bcd4, #8c46ff);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
+  }
+  .btn-neon:hover {
+    box-shadow: 0 0 30px rgba(0, 188, 212, 0.7), inset 0 0 10px rgba(140, 70, 255, 0.4);
+    letter-spacing: 0.15em;
+  }
+}
