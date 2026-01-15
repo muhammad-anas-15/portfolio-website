@@ -13,24 +13,25 @@ import Education from './sections/Education/Education'
 
 const App = () => {
   return (
-    <div className="relative bg-black min-h-screen">
+    <div className="relative bg-black min-h-screen overflow-x-hidden">
       
-      {/* GLOBAL BACKGROUND */}
+      {/* GLOBAL BACKGROUND - Keeps covering full screen */}
       <ParticlesBackground />
 
       {/* CUSTOM CURSOR */}
       <CustomCursor />
 
-      {/* PAGE CONTENT */}
-      <Navbar />
-      <Home />
-      <About />
-      <TechStack />
-      <ExperienceSection />
-      <ProjectSection />
-      <Education/>
-      <Skills />
-      <Contact />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <Navbar />
+        <Home />
+        <About />
+        <TechStack />
+        <ExperienceSection />
+        <ProjectSection />
+        <Education/>
+        <Skills />
+        <Contact />
+      </div>
       
     </div>
   )
