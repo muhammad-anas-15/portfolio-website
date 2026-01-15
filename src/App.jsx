@@ -19,7 +19,7 @@ const App = () => {
       <ParticlesBackground />
       <CustomCursor />
 
-      */}
+
       <div className="max-w-[1280px] mx-auto px-0 relative z-10 pt-20">
         
         <Navbar />
