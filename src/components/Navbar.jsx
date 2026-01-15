@@ -24,13 +24,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-300 border-b border-transparent ${
+      className={`fixed top-0 left-0 right-0 mx-auto w-full max-w-[1280px] z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-black/50 backdrop-blur-lg border-white/10 py-4 shadow-lg"
-          : "bg-transparent py-6"
+          ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
+          : "bg-transparent"
       }`}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 flex items-center justify-between">
+      <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         
         {/* LOGO - Added whitespace-nowrap to prevent breaking */}
         <div className="flex items-center gap-1 cursor-pointer z-50 relative">
