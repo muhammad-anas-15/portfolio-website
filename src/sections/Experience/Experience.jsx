@@ -4,21 +4,21 @@ import { motion } from "framer-motion";
 
 const experienceData = [
   {
-    title: "Full-Stack Developer",
-    company: "Software House",
-    duration: "Jun '01 -  Persent",
+    title: "Web Developer Intern",
+    company: "CIMT Mansehra",
+    duration: "Jan 2026 - Feb 2026",
     description: [
       "Worked on multiple client-based projects, handling complete development cycles from UI/UX design to backend implementation.",
       "Built responsive and user-focused interfaces while integrating secure and scalable backend services.",
-      "Collaborated with designers, developers, and project managers to deliver production-ready solutions under tight deadlines.",
+      "Collaborated with designers, developers to deliver production-ready solutions under tight deadlines.",
       "Actively contributed to feature planning, debugging, optimization, and performance improvements across projects.",
     ],
     tags: ["React", "Node.js", "MongoDB", "Express", "UI/UX", "REST APIs"],
   },
   {
-    title: "Freelance Frontend UI/UX",
+    title: "Freelance Frontend",
     company: "Self-Employed",
-    duration: "Jun '01 - August '04",
+    duration: "Dec 25 - Present",
     description: [
       "Developed modern, high-quality frontend interfaces for freelance clients with a strong focus on usability and clean design.",
       "Translated design concepts and requirements into reusable React components and smooth user experiences.",

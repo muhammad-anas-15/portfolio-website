@@ -80,9 +80,9 @@ const About = () => {
              {/* 2. Text Content */}
              <div className="space-y-4 text-center lg:text-left">
                 <p className="text-gray-400 text-lg leading-relaxed">
-                  With over 5 years of experience in the tech industry, I specialize in 
-                  architecting responsive and performant web ecosystems. I turn complex 
-                  requirements into seamless digital experiences.
+                  A Computer Science student with hands-on experience in MERN stack development. 
+                  I have worked on real-world projects involving authentication, databases, APIs, 
+                  and deployment, with a strong interest in building practical, user-friendly web applications.
                 </p>
 
                 {/* 3. Buttons */}
