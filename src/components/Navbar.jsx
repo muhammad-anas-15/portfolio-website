@@ -50,13 +50,12 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 mx-auto w-full max-w-[1280px] z-50
       transition-all duration-300 transform
-      
-      ${/* 3. MODIFIED: Always show navbar if menu is open, otherwise follow scroll logic */ ""}
-      ${showNavbar || isOpen ? "translate-y-0" : "-translate-y-full"}
-      
-      ${/* 4. MODIFIED: Only show the black background if scrolled AND menu is closed. 
-         If menu is open, make it transparent so it blends with the mobile menu overlay. */ ""}
       ${
+        /* FIX 1: Always keep navbar visible if menu is OPEN (|| isOpen) */
+        showNavbar || isOpen ? "translate-y-0" : "-translate-y-full"
+      }
+      ${
+        /* FIX 2: Keep background transparent if menu is OPEN so items aren't hidden behind a black bar */
         isScrolled && !isOpen
           ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
           : "bg-transparent"
@@ -73,7 +72,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* DESKTOP MENU */}
+        {/* DESKTOP MENU (Unchanged) */}
         <ul className="hidden lg:flex items-center gap-8 xl:gap-12">
           {navLinks.map((link) => (
             <li key={link.name}>
@@ -93,7 +92,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* CONNECT BUTTON */}
+        {/* CONNECT BUTTON (Unchanged) */}
         <div className="hidden lg:block">
           <Link
             to="contact"
@@ -115,9 +114,10 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU (FIXED SECTION) */}
       <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-transform duration-500 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-start 
+        pt-28 pb-10 gap-6 h-screen overflow-y-auto transition-transform duration-500 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -150,5 +150,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
