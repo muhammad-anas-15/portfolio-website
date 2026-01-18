@@ -5,11 +5,27 @@ import { FiMenu, FiX } from "react-icons/fi";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+
+      // Add background blur after slight scroll
+      setIsScrolled(currentScrollY > 20);
+
+      // Hide on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+
+      lastScrollY = currentScrollY;
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,7 +40,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 mx-auto w-full max-w-[1280px] z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 mx-auto w-full max-w-[1280px] z-50
+      transition-all duration-300 transform
+      ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+      ${
         isScrolled
           ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
           : "bg-transparent"
@@ -32,16 +51,16 @@ const Navbar = () => {
     >
       <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         
-        {/* LOGO - Added whitespace-nowrap to prevent breaking */}
+        {/* LOGO */}
         <div className="flex items-center gap-1 cursor-pointer z-50 relative">
-           <Link to="home" smooth={true} duration={500} offset={-80}>
+          <Link to="home" smooth={true} duration={500} offset={-80}>
             <h3 className="text-2xl md:text-3xl font-bold tracking-tighter text-white font-heading hover:text-gray-200 transition-colors whitespace-nowrap">
-                Muhammad <span className="font-light text-gray-400">Anas</span>
+              Muhammad <span className="font-light text-gray-400">Anas</span>
             </h3>
-           </Link>
+          </Link>
         </div>
 
-        {/* DESKTOP MENU - Switched to 'lg:flex' so tablets use mobile menu */}
+        {/* DESKTOP MENU */}
         <ul className="hidden lg:flex items-center gap-8 xl:gap-12">
           {navLinks.map((link) => (
             <li key={link.name}>
@@ -61,11 +80,11 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* CONNECT BUTTON - Switched to 'lg:block' */}
+        {/* CONNECT BUTTON */}
         <div className="hidden lg:block">
-          <Link 
-            to="contact" 
-            smooth={true} 
+          <Link
+            to="contact"
+            smooth={true}
             duration={500}
             offset={-50}
             className="btn-primary cursor-pointer text-sm lg:text-base whitespace-nowrap"
@@ -74,16 +93,16 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* MOBILE TOGGLE - Visible on 'lg' and below (Tablets & Phones) */}
-        <div 
-          className="lg:hidden text-3xl text-white cursor-pointer hover:text-brand-purple transition-colors z-50 relative" 
+        {/* MOBILE TOGGLE */}
+        <div
+          className="lg:hidden text-3xl text-white cursor-pointer hover:text-brand-purple transition-colors z-50 relative"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FiX /> : <FiMenu />}
         </div>
       </div>
 
-      {/* MOBILE MENU OVERLAY */}
+      {/* MOBILE MENU */}
       <div
         className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-10 transition-transform duration-500 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
