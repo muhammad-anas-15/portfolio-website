@@ -7,17 +7,25 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
 
+  // 1. ADDED: Lock body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Add background blur after slight scroll
       setIsScrolled(currentScrollY > 20);
 
-      // Hide on scroll down, show on scroll up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // 2. MODIFIED: Only hide navbar if the MENU IS CLOSED (!isOpen)
+      // This prevents the close button from vanishing if the user scrolls while the menu is open
+      if (!isOpen && currentScrollY > lastScrollY && currentScrollY > 100) {
         setShowNavbar(false);
       } else {
         setShowNavbar(true);
@@ -28,7 +36,7 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isOpen]); // Added isOpen dependency
 
   const navLinks = [
     { name: "Home", to: "home" },
@@ -42,9 +50,14 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 mx-auto w-full max-w-[1280px] z-50
       transition-all duration-300 transform
-      ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+      
+      ${/* 3. MODIFIED: Always show navbar if menu is open, otherwise follow scroll logic */ ""}
+      ${showNavbar || isOpen ? "translate-y-0" : "-translate-y-full"}
+      
+      ${/* 4. MODIFIED: Only show the black background if scrolled AND menu is closed. 
+         If menu is open, make it transparent so it blends with the mobile menu overlay. */ ""}
       ${
-        isScrolled
+        isScrolled && !isOpen
           ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
           : "bg-transparent"
       }`}
