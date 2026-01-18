@@ -117,7 +117,7 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-10 transition-transform duration-500 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-start pt-32 pb-10 gap-8 overflow-y-auto transition-transform duration-500 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
