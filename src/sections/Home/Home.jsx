@@ -6,7 +6,7 @@ import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 import resumePDF from "../../assets/Resume.pdf"; 
 
 const Home = () => {
-  const roles = useMemo(() => ["Full Stack Engineer", "Software Developer"], []);
+  const roles = useMemo(() => ["Full Stack Developer", "AI Engineer"], []);
 
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);

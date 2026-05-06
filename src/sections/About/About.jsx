@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiCode, FiUser, FiZap, FiCloud } from 'react-icons/fi';
+import { FiCpu, FiCode, FiEye, FiLayers } from 'react-icons/fi';
 import profileImg from '../../assets/admin-profile-2.png';
 // Import Resume
 import resumePDF from "../../assets/Resume.pdf";
@@ -8,24 +8,24 @@ import resumePDF from "../../assets/Resume.pdf";
 const About = () => {
   const highlights = [
     {
+      icon: <FiCpu />, 
+      title: "AI & Multi-Agent Systems",
+      text: "Building intelligent pipelines, RAG architectures, and sequential multi-agent systems using LangChain and LLMs.",
+    },
+    {
       icon: <FiCode />,
       title: "Full-Stack Development",
-      text: "Expertise in scalable architectures using MERN & Next.js.",
+      text: "Developing scalable, production-ready web platforms using modern architectures like MERN and Next.js.",
     },
     {
-      icon: <FiZap />,
-      title: "Modern Frontend",
-      text: "Creating responsive and interactive UIs with React.js and Next.js.",
+      icon: <FiEye />,
+      title: "Machine Learning & Vision",
+      text: "Training robust models (XGBoost, PyTorch) and engineering forensic pipelines for computer vision tasks.",
     },
     {
-      icon: <FiUser />,
-      title: "Database Management",
-      text: "Working with MongoDB and MySQL to design and manage efficient data models.",
-    },
-    {
-      icon: <FiCloud />, 
-      title: "Cloud Native Solutions", 
-      text: "Deploying resilient applications using modern cloud infrastructure.",
+      icon: <FiLayers />, 
+      title: "Data & Vector Management",
+      text: "Designing efficient schemas across relational (PostgreSQL), NoSQL (MongoDB), and Vector databases (FAISS).",
     },
   ];
 
@@ -80,9 +80,7 @@ const About = () => {
              {/* 2. Text Content */}
              <div className="space-y-4 text-center lg:text-left">
                 <p className="text-gray-400 text-lg leading-relaxed">
-                  A Computer Science student with hands-on experience in MERN stack development. 
-                  I have worked on real-world projects involving authentication, databases, APIs, 
-                  and deployment, with a strong interest in building practical, user-friendly web applications.
+                  A Computer Science student with hands-on experience building end-to-end AI applications, multi-agent systems, and full-stack web platforms. I specialize in integrating LLMs, RAG architectures, and computer vision models into robust MERN stack environments, with a strong focus on deploying practical, intelligent, and user-friendly solutions.
                 </p>
 
                 {/* 3. Buttons */}

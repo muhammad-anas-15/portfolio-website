@@ -16,15 +16,15 @@ const experienceData = [
     tags: ["React", "Node.js", "MongoDB", "Express", "UI/UX", "REST APIs"],
   },
   {
-    title: "Freelance Frontend",
-    company: "Self-Employed",
-    duration: "Dec 25 - Present",
+    title: "Python Developer Intern",
+    company: "BIT BUILD",
+    duration: "Jul 2024 - Aug 2024",
     description: [
-      "Developed modern, high-quality frontend interfaces for freelance clients with a strong focus on usability and clean design.",
-      "Translated design concepts and requirements into reusable React components and smooth user experiences.",
-      "Ensured responsiveness, accessibility, and performance optimization across different devices and screen sizes.",
+      "Developed and optimized Python programs and scripts for automation, data handling, and backend processing.",
+      "Collaborated remotely with the development team to troubleshoot, debug, and enhance existing software solutions.",
+      "Gained hands-on experience in the software development lifecycle, writing clean, maintainable, and efficient Python code.",
     ],
-    tags: ["React", "JavaScript", "Tailwind CSS", "Responsive Design", "UI Development"],
+    tags: ["Python", "Program Creation", "Automation", "Software Development", "Remote"],
   },
 ];
 
