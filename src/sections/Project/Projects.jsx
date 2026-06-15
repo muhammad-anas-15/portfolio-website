@@ -7,6 +7,8 @@ import msgInImg from '../../assets/msgIn_Img.jpeg';
 import GenimaImg from '../../assets/Genima_img.jpg';
 import Realstateimg from '../../assets/realstate.jpg';
 import Rag_based from '../../assets/Rag_based.png';
+import Agentic_img from '../../assets/Agentic_Clinical.png';
+import fake_screenshot from '../../assets/fake_screenshot.png';
 
 // --- NEW AI PROJECT IMAGES (Update these with your actual files!) ---
 // import agenticImg from '../../assets/agentic.jpg';
@@ -65,7 +67,7 @@ const projectsData = [
       "Trained a 5-class XGBoost classifier on 87,000+ records and integrated a DenseNet Imaging Agent.",
       "Implemented a multimodal RAG pipeline with a real-time Streamlit dashboard for treatment plans."
     ],
-    image: GenimaImg, // Replace with 'agenticImg'
+    image: Agentic_img, // Replace with 'agenticImg'
     tags: ["Python", "XGBoost", "PyTorch", "FAISS", "Gemini 2.0"],
     githubLink: "#"
   },
@@ -78,7 +80,7 @@ const projectsData = [
       "Engineered 128 custom forensic features using Error Level Analysis (ELA) and DCT variance.",
       "Developed a two-tier decision engine using local XGBoost for fast inference and Gemini Pro fallback."
     ],
-    image: msgInImg, // Replace with 'fraudDetectionImg'
+    image: fake_screenshot, // Replace with 'fraudDetectionImg'
     tags: ["OpenCV", "Scikit-Learn", "XGBoost", "Python"],
     githubLink: "#"
   },
