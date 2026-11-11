@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Raw source images/CV dropped in for processing (optimised copies live in public/)
+new-images/
+
+# Cloudflare Worker local files (secrets live in .dev.vars — never commit)
+.wrangler
+.dev.vars
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

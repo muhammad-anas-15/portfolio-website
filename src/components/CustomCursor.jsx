@@ -1,74 +1,77 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+
+/**
+ * The original custom cursor: a small dot that follows the mouse closely and a
+ * ring that trails behind it and grows over links and buttons.
+ * Hidden automatically on touch devices (see .custom-cursor in index.css).
+ */
+const INTERACTIVE = "a, button, input, textarea, select, label, [role='button']";
 
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
 
   useEffect(() => {
+    if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+
     const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const dot = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const ring = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let isHovering = false;
+    const dot = { ...mouse };
+    const ring = { ...mouse };
+    let hovering = false;
+    let visible = false;
+    let frame;
 
-    const DOT_SMOOTHNESS = 0.2;
-    const RING_SMOOTHNESS = 0.1;
+    const lerp = (a, b, t) => a + (b - a) * t;
 
-    const interactiveElements = document.querySelectorAll(
-      "a, button, img, input, textarea, select"
-    );
-
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", () => (isHovering = true));
-      el.addEventListener("mouseleave", () => (isHovering = false));
-    });
-
-    const handleMouseMove = (e) => {
+    const onMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      // event delegation: works for elements added later too
+      hovering = Boolean(e.target.closest?.(INTERACTIVE));
+      if (!visible) {
+        visible = true;
+        dotRef.current.style.opacity = "1";
+        ringRef.current.style.opacity = "1";
+      }
     };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    const lerp = (start, end, factor) => start + (end - start) * factor;
+    const onLeave = () => {
+      visible = false;
+      dotRef.current.style.opacity = "0";
+      ringRef.current.style.opacity = "0";
+    };
 
     const animate = () => {
-      dot.x = lerp(dot.x, mouse.x, DOT_SMOOTHNESS);
-      dot.y = lerp(dot.y, mouse.y, DOT_SMOOTHNESS);
-
-      ring.x = lerp(ring.x, mouse.x, RING_SMOOTHNESS);
-      ring.y = lerp(ring.y, mouse.y, RING_SMOOTHNESS);
-
-      if (dotRef.current && ringRef.current) {
-        dotRef.current.style.transform = `translate(${dot.x - 4}px, ${dot.y - 4}px)`;
-        ringRef.current.style.transform = `translate(${ring.x - (isHovering ? 22 : 14)}px, ${
-          ring.y - (isHovering ? 22 : 14)
-        }px)`;
-        ringRef.current.style.width = isHovering ? "44px" : "28px";
-        ringRef.current.style.height = isHovering ? "44px" : "28px";
-      }
-
-      requestAnimationFrame(animate);
+      dot.x = lerp(dot.x, mouse.x, 0.35);
+      dot.y = lerp(dot.y, mouse.y, 0.35);
+      ring.x = lerp(ring.x, mouse.x, 0.14);
+      ring.y = lerp(ring.y, mouse.y, 0.14);
+      const size = hovering ? 46 : 30;
+      dotRef.current.style.transform = `translate3d(${dot.x - 4}px, ${dot.y - 4}px, 0)`;
+      ringRef.current.style.transform = `translate3d(${ring.x - size / 2}px, ${ring.y - size / 2}px, 0)`;
+      ringRef.current.style.width = `${size}px`;
+      ringRef.current.style.height = `${size}px`;
+      ringRef.current.style.borderColor = hovering ? "rgba(34, 211, 238, 0.9)" : "rgba(255, 255, 255, 0.7)";
+      ringRef.current.style.backgroundColor = hovering ? "rgba(34, 211, 238, 0.08)" : "transparent";
+      frame = requestAnimationFrame(animate);
     };
 
-    animate();
-
+    window.addEventListener("mousemove", onMove, { passive: true });
+    document.documentElement.addEventListener("mouseleave", onLeave);
+    frame = requestAnimationFrame(animate);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("mousemove", onMove);
+      document.documentElement.removeEventListener("mouseleave", onLeave);
     };
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50">
-      <div
-        ref={dotRef}
-        className="absolute bg-white rounded-full"
-        style={{ width: "8px", height: "8px" }}
-      />
+    <div aria-hidden="true" className="custom-cursor pointer-events-none fixed inset-0 z-[100]">
+      <div ref={dotRef} className="absolute left-0 top-0 h-2 w-2 rounded-full bg-white opacity-0 transition-opacity duration-300" />
       <div
         ref={ringRef}
-        className="absolute border border-white rounded-full"
-        style={{ width: "28px", height: "28px" }}
+        className="absolute left-0 top-0 rounded-full border opacity-0 transition-[opacity,width,height,background-color,border-color] duration-200"
+        style={{ width: 30, height: 30 }}
       />
     </div>
   );

@@ -1,146 +1,150 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
+import { profile } from "../data/portfolio";
+
+const links = [
+  { name: "About", id: "about" },
+  { name: "Expertise", id: "expertise" },
+  { name: "Stack", id: "stack" },
+  { name: "Experience", id: "experience" },
+  { name: "Projects", id: "projects" },
+  { name: "Education", id: "education" },
+  { name: "Contact", id: "contact" },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [active, setActive] = useState("");
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
-  /* Lock body scroll when mobile menu is open */
+  // Highlight the section under the middle of the screen. Measured on every
+  // scroll/resize, so it stays right even when a section changes height
+  // (e.g. switching project categories).
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-  }, [isOpen]);
-
-  /* Hide on scroll down, show on scroll up (only when menu is closed) */
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      setIsScrolled(currentScrollY > 20);
-
-      if (!isOpen && currentScrollY > lastScrollY && currentScrollY > 100) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
+    const ids = ["home", ...links.map((l) => l.id)];
+    let frame;
+    const update = () => {
+      frame = null;
+      setScrolled(window.scrollY > 24);
+      const line = window.innerHeight * 0.45;
+      let current = "home";
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
       }
-
-      lastScrollY = currentScrollY;
+      setActive(current);
     };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
-
-  const navLinks = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Tech Stack", to: "skills" },
-    { name: "Experience", to: "experience" },
-    { name: "Projects", to: "projects" },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
 
   return (
     <>
-      {/* NAVBAR BAR (FULL WIDTH, FIXED) */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50
-        transition-transform duration-300
-        ${showNavbar || isOpen ? "translate-y-0" : "-translate-y-full"}
-        ${
-          isScrolled && !isOpen
-            ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
-            : "bg-transparent"
-        }`}
-      >
-        {/* CENTERED CONTENT */}
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          
-          {/* LOGO */}
-          <Link to="home" smooth duration={500} offset={-80}>
-            <h3 className="text-2xl md:text-3xl font-bold tracking-tighter text-white hover:text-gray-200 transition-colors whitespace-nowrap cursor-pointer">
-              Muhammad <span className="font-light text-gray-400">Anas</span>
-            </h3>
-          </Link>
+      <motion.div
+        style={{ scaleX: progress }}
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-accent-deep via-accent to-accent-bright"
+      />
 
-          {/* DESKTOP MENU */}
-          <ul className="hidden lg:flex items-center gap-8 xl:gap-12">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  to={link.to}
-                  spy
-                  smooth
-                  offset={-100}
-                  duration={500}
-                  activeClass="text-brand-cyan font-bold"
-                  className="relative text-sm font-medium text-gray-300 hover:text-white transition cursor-pointer uppercase tracking-wide"
-                >
-                  {link.name}
-                  <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-brand-cyan transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-              </li>
-            ))}
+      <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4">
+        <nav
+          aria-label="Main"
+          className={`mx-auto flex max-w-[920px] items-center justify-between rounded-full border px-3 py-2 transition-all duration-500 sm:px-4 ${
+            scrolled || open
+              ? "border-line-strong bg-ink/75 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+              : "border-line bg-ink/30 backdrop-blur-md"
+          }`}
+        >
+          <a href="#home" className="px-2 font-display text-lg font-bold tracking-tight text-cream" onClick={() => setOpen(false)}>
+            {profile.initials}
+            <span className="text-accent">.</span>
+          </a>
+
+          <ul className="hidden items-center gap-1 lg:flex">
+            {links.map((link) => {
+              const isActive = active === link.id;
+              return (
+                <li key={link.id} className="relative">
+                  <a
+                    href={`#${link.id}`}
+                    className={`relative z-10 block rounded-full px-4 py-2 text-sm transition-colors ${
+                      isActive ? "text-accent-bright" : "text-soft/80 hover:text-cream"
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 rounded-full border border-accent/30 bg-accent/10"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
-          {/* DESKTOP CTA */}
-          <div className="hidden lg:block">
-            <Link
-              to="contact"
-              smooth
-              duration={500}
-              offset={-50}
-              className="btn-primary cursor-pointer whitespace-nowrap"
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="btn-primary hidden !px-5 !py-2 text-sm sm:inline-flex">
+              Get in Touch
+            </a>
+            <button
+              type="button"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="grid h-10 w-10 place-items-center rounded-full border border-line-strong text-xl text-cream lg:hidden"
             >
-              Connect With Me
-            </Link>
+              {open ? <FiX /> : <FiMenu />}
+            </button>
           </div>
+        </nav>
 
-          {/* MOBILE TOGGLE */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-3xl text-white hover:text-brand-purple transition z-50"
-          >
-            {isOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </div>
-      </nav>
-
-      {/* MOBILE FULLSCREEN MENU */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl
-        flex flex-col items-center justify-center
-        px-6 pt-28 pb-12 gap-8
-        transition-transform duration-500 lg:hidden
-        ${isOpen ? "translate-x-0" : "translate-x-full"}`}
-      >
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            to={link.to}
-            smooth
-            duration={500}
-            offset={-80}
-            onClick={() => setIsOpen(false)}
-            className="text-3xl font-semibold text-gray-400 hover:text-brand-cyan transition cursor-pointer"
-          >
-            {link.name}
-          </Link>
-        ))}
-
-        <Link
-          to="contact"
-          smooth
-          duration={500}
-          offset={-50}
-          onClick={() => setIsOpen(false)}
-          className="btn-primary mt-6 w-full max-w-xs text-center"
-        >
-          Connect With Me
-        </Link>
-      </div>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="mx-auto mt-2 max-w-[920px] rounded-3xl border border-line-strong bg-ink/95 p-3 backdrop-blur-xl lg:hidden"
+            >
+              {links.map((link, i) => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-xl ${
+                    active === link.id ? "bg-accent/10 text-accent-bright" : "text-cream"
+                  }`}
+                >
+                  {link.name}
+                  <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                </a>
+              ))}
+              <a href="#contact" onClick={() => setOpen(false)} className="btn-primary mt-2 w-full">
+                Get in Touch
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 };

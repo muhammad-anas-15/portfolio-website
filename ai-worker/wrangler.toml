@@ -1,0 +1,16 @@
+name = "anas-portfolio-ai"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# "gemini" (free tier) or "claude"
+PROVIDER = "gemini"
+GEMINI_MODEL = "gemini-2.5-flash"
+# Default Claude model. For the lowest cost, change to "claude-haiku-5-5".
+CLAUDE_MODEL = "claude-opus-5-5"
+# Websites allowed to call this worker (comma-separated)
+ALLOWED_ORIGINS = "https://muhammad-anas-15.github.io,http://localhost:5173,http://localhost:4173"
+
+# API keys are NOT stored here. Add them as encrypted secrets:
+#   npx wrangler secret put GEMINI_API_KEY
+#   npx wrangler secret put ANTHROPIC_API_KEY   (only if PROVIDER = "claude")
