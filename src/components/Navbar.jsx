@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import { profile } from "../data/portfolio";
+import { gsap, useGSAP, MOTION_OK } from "../lib/gsap";
 
 const links = [
   { name: "About", id: "about" },
@@ -50,6 +51,15 @@ const Navbar = () => {
     };
   }, []);
 
+  // glides down into place on load
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.from("[data-nav]", { yPercent: -140, autoAlpha: 0, duration: 1, delay: 0.2, ease: "power4.out" });
+    });
+    return () => mm.revert();
+  });
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
   }, [open]);
@@ -58,15 +68,15 @@ const Navbar = () => {
     <>
       <motion.div
         style={{ scaleX: progress }}
-        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-accent-deep via-accent to-accent-bright"
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-accent"
       />
 
-      <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4">
+      <header data-nav className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4">
         <nav
           aria-label="Main"
-          className={`mx-auto flex max-w-[920px] items-center justify-between rounded-full border px-3 py-2 transition-all duration-500 sm:px-4 ${
+          className={`mx-auto flex max-w-[920px] items-center justify-between rounded-full border px-3 py-2 transition-[background-color,border-color,box-shadow] duration-500 sm:px-4 ${
             scrolled || open
-              ? "border-line-strong bg-ink/75 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+              ? "border-line-strong bg-ink/80 shadow-float backdrop-blur-xl"
               : "border-line bg-ink/30 backdrop-blur-md"
           }`}
         >
@@ -101,15 +111,15 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-2">
-            <a href="#contact" className="btn-primary hidden !px-5 !py-2 text-sm sm:inline-flex">
-              Get in Touch
+            <a href="#contact" data-magnetic="0.3" className="btn-ghost hidden !min-h-10 !px-5 !py-2 text-sm sm:inline-flex">
+              Get in touch
             </a>
             <button
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="grid h-10 w-10 place-items-center rounded-full border border-line-strong text-xl text-cream lg:hidden"
+              className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-xl text-cream lg:hidden"
             >
               {open ? <FiX /> : <FiMenu />}
             </button>
@@ -125,7 +135,7 @@ const Navbar = () => {
               transition={{ duration: 0.2 }}
               className="mx-auto mt-2 max-w-[920px] rounded-3xl border border-line-strong bg-ink/95 p-3 backdrop-blur-xl lg:hidden"
             >
-              {links.map((link, i) => (
+              {links.map((link) => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
@@ -135,11 +145,10 @@ const Navbar = () => {
                   }`}
                 >
                   {link.name}
-                  <span className="font-mono text-xs text-muted">0{i + 1}</span>
                 </a>
               ))}
               <a href="#contact" onClick={() => setOpen(false)} className="btn-primary mt-2 w-full">
-                Get in Touch
+                Get in touch
               </a>
             </motion.div>
           )}

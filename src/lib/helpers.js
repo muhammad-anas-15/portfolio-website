@@ -14,10 +14,5 @@ export function resolveStat(value) {
 
 export const article = (word) => (/^[aeiou]/i.test(word) ? "an" : "a");
 
-/** Shared reveal-on-scroll animation props for framer-motion. */
-export const reveal = (delay = 0, y = 24) => ({
-  initial: { opacity: 0, y },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
-});
+/** Marks an element for the GSAP reveal-once (components/MotionFX.jsx). */
+export const reveal = () => ({ "data-reveal": "" });

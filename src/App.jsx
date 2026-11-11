@@ -1,5 +1,7 @@
 import Background from "./components/Background";
-import CustomCursor from "./components/CustomCursor";
+import ChromaHalo from "./components/ChromaHalo";
+import SmoothScroll from "./components/SmoothScroll";
+import MotionFX from "./components/MotionFX";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AskAI from "./components/AskAI";
@@ -14,8 +16,9 @@ import Contact from "./sections/Contact";
 
 const App = () => (
   <div className="relative min-h-screen overflow-x-clip bg-ink">
+    <SmoothScroll />
     <Background />
-    <CustomCursor />
+    <ChromaHalo />
     <Navbar />
     <main className="relative z-10">
       <Hero />
@@ -31,6 +34,8 @@ const App = () => (
       <Footer />
     </div>
     <AskAI />
+    {/* last, so it sees every section's DOM */}
+    <MotionFX />
   </div>
 );
 

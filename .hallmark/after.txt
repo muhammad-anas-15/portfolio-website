@@ -1,0 +1,42 @@
+render tier: 5 screenshots in D:\Portfolio\.hallmark\shots (1280x800, 1440x900, 1920x1080 folds; 1440 and 375 full pages)
+http://localhost:4173/portfolio-website/
+  FAIL 40 :1 [1280px] contrast 1.01:1 against the pixels behind < 4.5:1 on span.relative "All 9" | fix: Raise the contrast to threshold
+  FAIL 41 :1 [1280px] button text ~ button fill on span.relative (1.01:1) | fix: Use accent-ink or paper for the label
+  FAIL 56 :1 [1280px] two sticky top:0 elements: div.sticky.top-0 + div.sticky.top-0 | fix: Offset the second sticky by banner height
+  WAIVED 80 :1 [1440px] drawn illustration: div.relative (540x540, 12 shapes)
+  NOTE 58 :1 [1440px] 161 words on one screen (from y=4750) | fix: One idea per screen: cut to about 80 words, make the section an object
+  NOTE 58 :1 [1440px] hero carries 4 text blocks before its actions | fix: Headline, one sentence, actions; delete the rest
+src\components\AskAI.jsx
+  WAIVER waive :1 malformed waiver, ignored: /* Hallmark · waive cursor · the chromatic h… | fix: Three · -separated fields: /* Hallmark · waive <gate> · <guard evidence> · <reason> */
+src\index.css
+  WAIVER waive :1 malformed waiver, ignored: /* Hallmark · waive cursor · the chromatic h…
+  WAIVED 37 :61 4 font families: syne, dm sans, jetbrains mono, instrument serif
+src\sections\About.jsx
+  WAIVER waive :1 malformed waiver, ignored: /* Hallmark · waive cursor · the chromatic h…
+src\sections\Experience.jsx
+  WARN 28a :26 lazy-loaded first image (likely LCP) | fix: fetchpriority=high on the LCP element
+src\sections\Contact.jsx
+  WARN 49 :71 long clickable label "Sending… Message sent. Thank you. S…" without nowrap | fix: Shorten the label or set nowrap
+.hallmark\before.json
+  WARN kept :1 headings gone or reworded since the before record: where i'm expert?, where i've worked, projects i've shipped, where i've studied, 2018 — 2020, matriculation (science) — 85%, 2020 — 2022, fsc pre-engineering — 89% and 1 more | fix: Restore it, or record it in the stamp: /* Hallmark · reworded "<old>" to "<new>" · <the gate that named it> */ or dropped <item> · <the reason>
+  WARN kept :1 figures gone or reworded since the before record: 18x, 12:46
+  WARN kept :1 ids gone or reworded since the before record: bot-bg, bot-face, gauge-glow, gauge-grad, globe-fill, trend
+src\components\Background.jsx
+  WAIVED 29 :89 blurred orb: blur-[150px] on a filled absolute element on <div class="absolute -left-40 -top-40 h-[62…">
+  WAIVED 29 :90 blurred orb: blur-[150px] on a filled absolute element on <div class="absolute -right-48 top-1/3 h-[5…">
+  WAIVED 29 :91 blurred orb: blur-[150px] on a filled absolute element on <div class="absolute -bottom-48 left-1/4 h-…">
+src\components\CodePortrait.jsx
+  WAIVED 29 :259 glass: backdrop-blur-md over bg-ink/85 on <span class="pointer-events-none absolute le…">
+src\components\Navbar.jsx
+  WAIVED 29 :75 glass: backdrop-blur-xl over bg-ink/80 on <nav class="mx-auto flex max-w-[920px] item…">
+src\components\ProjectCover.jsx
+  WAIVED 29 :60 glass: backdrop-blur-md over bg-ink/60 on <span class="absolute -right-2 top-0 hidden …">
+src\sections\Hero.jsx
+  WAIVED 29 :127 blurred orb: blur-[90px] on a filled absolute element on <div class="absolute left-[15%] top-[14%] h…">
+  WAIVED 29 :128 blurred orb: blur-[100px] on a filled absolute element on <div class="absolute bottom-[14%] right-[4%…">
+src\sections\Projects.jsx
+  WAIVED 29 :46 glass: backdrop-blur-md over bg-ink/80 on <span class="absolute inset-x-4 bottom-4 fle…">
+  WAIVED 29 :219 glass: backdrop-blur-xl over bg-ink/85 on <div class="flex w-max gap-1 rounded-full b…">
+sloplint: 3 FAIL, 5 WARN, 12 WAIVED, 3 REJECTED, 2 NOTE across 25 file(s) and 1 URL(s).
+kept: links 37/39 (2 dropped on record), fields 3/3, handlers 14/14, headings 29/38, figures 19/21; before 69 FAIL, 17 REFLEX, now 3 FAIL, 0 REFLEX
+compare: .hallmark\compare.html shows before and after side by side

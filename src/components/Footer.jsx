@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { FiArrowRight, FiArrowUp, FiArrowUpRight, FiFileText, FiMail } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import { FiFileText, FiMail } from "react-icons/fi";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedinIn } from "react-icons/fa";
 import { profile } from "../data/portfolio";
 import { asset } from "../lib/helpers";
+import { gsap, SplitText, useGSAP, MOTION_OK } from "../lib/gsap";
 
 const nav = [
   { name: "About", id: "about" },
   { name: "Expertise", id: "expertise" },
-  { name: "Tech Stack", id: "stack" },
+  { name: "Tech stack", id: "stack" },
   { name: "Experience", id: "experience" },
   { name: "Projects", id: "projects" },
   { name: "Education", id: "education" },
@@ -32,24 +32,39 @@ function LocalTime() {
     const t = setInterval(() => setTime(format()), 1000);
     return () => clearInterval(t);
   }, []);
-  return <span className="font-mono tabular-nums text-cream">{time}</span>;
+  return <span className="tabular-nums text-cream">{time}</span>;
 }
 
-const heading = "font-mono text-[11px] uppercase tracking-[0.25em] text-muted";
+const linkClass = "inline-flex min-h-8 items-center text-soft transition-colors duration-200 hover:text-cream";
 
 const Footer = () => {
-  const wordmark = profile.name.toUpperCase();
+  const scope = useRef(null);
+
+  // the top rule draws across, then the name rises letter by letter
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.fromTo("[data-footer-rule]", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "power3.inOut", scrollTrigger: { trigger: scope.current, start: "top 90%", once: true } });
+        const split = SplitText.create("[data-wordmark]", { type: "chars", mask: "chars" });
+        gsap.from(split.chars, {
+          yPercent: 110,
+          duration: 1,
+          stagger: 0.04,
+          ease: "power4.out",
+          scrollTrigger: { trigger: "[data-wordmark]", start: "top 98%", once: true },
+        });
+      });
+      return () => mm.revert();
+    },
+    { scope }
+  );
 
   return (
-    <footer className="relative mt-10 overflow-hidden bg-[#080c18]/70 pb-24 backdrop-blur-sm sm:pb-10">
-      {/* shimmering gradient line on top */}
-      <div
-        aria-hidden
-        className="h-px w-full animate-shimmer bg-[linear-gradient(90deg,transparent,#22d3ee,#3b82f6,#8b5cf6,transparent)] bg-[length:200%_100%]"
-      />
-      <div aria-hidden className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60%] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]" />
+    <footer ref={scope} className="relative mt-10 overflow-hidden bg-panel/70 pb-24 backdrop-blur-sm sm:pb-10">
+      <div aria-hidden data-footer-rule className="h-px w-full origin-left bg-accent/70" />
 
-      <div className="container-page relative grid gap-12 pt-16 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-page relative grid gap-12 pt-16 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
         {/* brand */}
         <div>
           <p className="font-display text-2xl font-bold text-cream">
@@ -57,32 +72,26 @@ const Footer = () => {
             <span className="text-accent">.</span>
           </p>
           <p className="mt-3 max-w-sm leading-relaxed text-muted">
-            AI engineer & full-stack developer building agents, RAG systems and SaaS products.
+            AI engineer and full-stack developer building agents, RAG systems and SaaS products.
           </p>
-          <a href={`mailto:${profile.email}`} className="group mt-6 inline-flex items-center gap-2 text-cream">
-            <span className="relative">
-              {profile.email}
-              <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-gradient-to-r from-accent to-violet transition-transform duration-500 group-hover:scale-x-100" />
-            </span>
-            <FiArrowUpRight className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <a
+            href={`mailto:${profile.email}`}
+            className="mt-6 inline-block border-b border-line-strong pb-0.5 text-cream transition-[border-color,color] duration-200 hover:border-accent hover:text-accent-bright"
+          >
+            {profile.email}
           </a>
-          <div className="mt-6 flex items-center gap-3 text-sm text-muted">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-emerald-400 [animation:ping-soft_2s_ease-out_infinite]" />
-              <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
-            Islamabad · <LocalTime />
-          </div>
+          <p className="mt-6 text-sm text-muted">
+            Local time in Islamabad: <LocalTime />
+          </p>
         </div>
 
         {/* navigate */}
         <nav aria-label="Footer">
-          <p className={heading}>Navigate</p>
-          <ul className="mt-5 space-y-3">
+          <p className="label">Navigate</p>
+          <ul className="mt-4 space-y-1">
             {nav.map((item) => (
               <li key={item.id}>
-                <a href={`#${item.id}`} className="group inline-flex items-center gap-2 text-soft transition-colors hover:text-cream">
-                  <FiArrowRight className="-ml-5 opacity-0 transition-all duration-300 group-hover:ml-0 group-hover:text-accent group-hover:opacity-100" />
+                <a href={`#${item.id}`} className={linkClass}>
                   {item.name}
                 </a>
               </li>
@@ -92,18 +101,18 @@ const Footer = () => {
 
         {/* connect */}
         <div>
-          <p className={heading}>Connect</p>
-          <ul className="mt-5 space-y-3">
+          <p className="label">Connect</p>
+          <ul className="mt-4 space-y-2">
             {social.map(({ name, href, icon: Icon }) => (
               <li key={name}>
                 <a
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-3 text-soft transition-colors hover:text-cream"
+                  className="group inline-flex min-h-10 items-center gap-3 text-soft transition-colors duration-200 hover:text-cream"
                 >
-                  <span className="grid h-8 w-8 place-items-center rounded-lg border border-line bg-white/[0.03] text-sm transition-all duration-300 group-hover:border-transparent group-hover:bg-gradient-to-br group-hover:from-accent group-hover:to-violet group-hover:text-white">
-                    <Icon />
+                  <span className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-white/[0.03] text-sm transition-[background-color,border-color,color] duration-200 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent">
+                    <Icon aria-hidden />
                   </span>
                   {name}
                 </a>
@@ -113,39 +122,23 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* giant name — letters slide up into view */}
+      {/* giant name, rising letter by letter (GSAP SplitText) */}
       <div className="container-page relative mt-16 select-none" aria-hidden>
-        {/* the parent watches the viewport (the hidden letters can't — they're clipped) */}
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ staggerChildren: 0.045 }}
-          className="flex justify-between overflow-hidden font-display text-[7vw] leading-[0.95] font-bold tracking-tight lg:text-[5.9rem]"
+        <p
+          data-wordmark
+          className="whitespace-nowrap text-center font-display text-[7vw] leading-[0.95] font-bold tracking-tight text-accent/25 lg:text-[5.9rem]"
         >
-          {wordmark.split("").map((ch, i) => (
-            <motion.span
-              key={i}
-              variants={{ hidden: { y: "105%" }, show: { y: "0%" } }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-block bg-gradient-to-b from-[#7dd3fc]/55 via-[#818cf8]/30 to-transparent bg-clip-text pb-2 text-transparent"
-            >
-              {ch === " " ? " " : ch}
-            </motion.span>
-          ))}
-        </motion.div>
+          {profile.name.toUpperCase()}
+        </p>
       </div>
 
       {/* bottom bar */}
       <div className="container-page relative mt-6 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 sm:flex-row">
-        <p className="font-mono text-[11px] text-muted">
-          © {new Date().getFullYear()} {profile.name} · Designed & built with React, Tailwind & Framer Motion
+        <p className="text-sm text-muted">
+          © {new Date().getFullYear()} {profile.name}. Designed and built with React, Tailwind and GSAP.
         </p>
-        <a href="#home" className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-soft hover:text-cream">
+        <a href="#home" data-magnetic="0.4" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong px-4 text-sm text-soft transition-[border-color,color] duration-200 hover:border-accent hover:text-cream">
           Back to top
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-line-strong transition-all duration-300 group-hover:border-transparent group-hover:bg-gradient-to-br group-hover:from-accent group-hover:to-violet group-hover:text-white">
-            <FiArrowUp className="transition-transform duration-300 group-hover:-translate-y-0.5" />
-          </span>
         </a>
       </div>
     </footer>

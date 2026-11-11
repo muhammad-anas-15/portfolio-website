@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import {
   SiClaude, SiCplusplus, SiCss3, SiDart, SiDjango, SiDocker, SiExpress, SiFastapi, SiFigma, SiFirebase,
   SiFlutter, SiGit, SiGithub, SiGooglegemini, SiHtml5, SiHuggingface, SiJavascript, SiLangchain, SiMongodb,
@@ -147,19 +146,12 @@ function Globe({ items }) {
     <div ref={wrapRef} className="relative mx-auto aspect-square w-full max-w-[540px] cursor-grab touch-pan-y select-none active:cursor-grabbing">
       {/* wireframe sphere */}
       <svg aria-hidden className="absolute inset-0 h-full w-full" viewBox={`${-size / 2} ${-size / 2} ${size} ${size}`}>
-        <defs>
-          <radialGradient id="globe-fill" cx="40%" cy="35%">
-            <stop offset="0%" stopColor="rgba(34, 211, 238,0.10)" />
-            <stop offset="70%" stopColor="rgba(34, 211, 238,0.03)" />
-            <stop offset="100%" stopColor="rgba(34, 211, 238,0)" />
-          </radialGradient>
-        </defs>
-        <circle r={radius} fill="url(#globe-fill)" stroke="rgba(34, 211, 238,0.22)" />
+        <circle r={radius} className="fill-accent/[0.04] stroke-accent/25" />
         {[-0.66, -0.33, 0, 0.33, 0.66].map((lat) => (
-          <ellipse key={lat} cy={lat * radius} rx={Math.sqrt(1 - lat * lat) * radius} ry={Math.sqrt(1 - lat * lat) * radius * 0.22} fill="none" stroke="rgba(34, 211, 238,0.10)" />
+          <ellipse key={lat} cy={lat * radius} rx={Math.sqrt(1 - lat * lat) * radius} ry={Math.sqrt(1 - lat * lat) * radius * 0.22} fill="none" className="stroke-accent/10" />
         ))}
         {Array.from({ length: 6 }, (_, k) => (
-          <ellipse key={k} ref={(el) => (meridianRefs.current[k] = el)} rx={radius} ry={radius} fill="none" stroke="rgba(34, 211, 238,0.10)" />
+          <ellipse key={k} ref={(el) => (meridianRefs.current[k] = el)} rx={radius} ry={radius} fill="none" className="stroke-accent/10" />
         ))}
       </svg>
 
@@ -175,16 +167,16 @@ function Globe({ items }) {
             onFocus={() => setHovered(item.name)}
             onBlur={() => setHovered(null)}
             aria-label={item.name}
-            className="absolute left-1/2 top-1/2 grid place-items-center rounded-full p-1.5 transition-[filter] will-change-transform hover:!opacity-100 hover:drop-shadow-[0_0_14px_rgba(34,211,238,0.6)]"
+            className="group/logo absolute left-1/2 top-1/2 grid place-items-center rounded-full p-1.5 hover:!opacity-100"
             style={{ color }}
           >
-            <Icon size={iconSize} />
+            <Icon size={iconSize} className="transition-transform duration-200 group-hover/logo:scale-125" />
           </button>
         );
       })}
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-[3%] text-center font-mono text-xs uppercase tracking-[0.3em] text-accent-bright">
-        {hovered || <span className="text-muted">Drag to spin · hover a logo</span>}
+      <div className="pointer-events-none absolute inset-x-0 bottom-[3%] text-center text-sm text-accent-bright">
+        {hovered || <span className="text-muted">Drag to spin, hover a logo</span>}
       </div>
     </div>
   );
@@ -201,34 +193,30 @@ const TechStack = () => {
     <section id="stack" className="section-frost relative py-24 sm:py-32">
       <div className="container-page">
         <SectionHeading
-          eyebrow="Tech Stack"
           title="The tools I"
           accent="build with"
           subtitle="Languages, AI frameworks and platforms I use to take ideas from notebook to production."
           align="center"
         />
 
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
-          {/* Categories — left */}
-          <motion.div {...reveal(0.15)} className="order-2 flex flex-col gap-3 lg:order-1">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          {/* Categories, left */}
+          <div className="order-2 flex flex-col gap-3 lg:order-1">
             {groups.map(([group, names]) => (
-              <div key={group} className="card group p-5 transition-colors duration-300 hover:border-accent/40">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="flex items-center gap-2.5 font-display text-base font-semibold text-cream">
-                    <span className="h-2 w-2 rounded-full bg-gradient-to-br from-accent to-violet" />
-                    {group}
-                  </h3>
-                  <span className="font-mono text-[11px] text-muted">{names.length} tools</span>
+              <div key={group} {...reveal()} data-tilt className="card p-5 transition-[border-color] duration-300 hover:border-accent/40">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-base font-bold text-cream">{group}</h3>
+                  <span className="label">{names.length} tools</span>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-soft/80">{names.join(" · ")}</p>
+                <p className="mt-2 text-sm leading-relaxed text-soft/80">{names.join(", ")}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* 3D globe — right */}
-          <motion.div {...reveal()} className="order-1 lg:order-2">
+          {/* 3D globe, right */}
+          <div {...reveal()} className="order-1 lg:order-2">
             <Globe items={techStack} />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

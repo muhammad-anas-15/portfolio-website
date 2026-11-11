@@ -1,23 +1,21 @@
-import { motion } from "framer-motion";
-import { reveal } from "../lib/helpers";
-
-const SectionHeading = ({ eyebrow, title, accent, subtitle, align = "left" }) => {
+/**
+ * Section opening (Hallmark craft § 7): the heading announces itself, no
+ * eyebrow label above it, one weight and one colour. GSAP raises its words
+ * out of a mask as it scrolls in ([data-split], components/MotionFX.jsx).
+ */
+const SectionHeading = ({ title, accent, subtitle, align = "left" }) => {
   const centered = align === "center";
   return (
-    <motion.div
-      {...reveal()}
-      className={`mb-14 flex flex-col gap-5 ${centered ? "items-center text-center" : "items-start"}`}
-    >
-      <span className="eyebrow">{eyebrow}</span>
-      <h2 className="heading-xl max-w-4xl">
-        {title} {accent && <span className="text-gradient">{accent}</span>}
+    <div className={`mb-14 flex flex-col gap-5 ${centered ? "items-center text-center" : "items-start"}`}>
+      <h2 data-split className="heading-xl max-w-[22ch]">
+        {title} {accent}
       </h2>
       {subtitle && (
-        <p className={`max-w-2xl text-lg leading-relaxed text-muted ${centered ? "mx-auto" : ""}`}>
+        <p data-reveal className={`max-w-2xl text-lg leading-relaxed text-muted ${centered ? "mx-auto" : ""}`}>
           {subtitle}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────────────────────
 // ALL portfolio content lives here. Edit this file to update the
-// site — components only handle the design.
+// site; components only handle the design.
 //
 // Keep this file plain data (no imports): the "Ask me" AI worker
-// (ai-worker/) also reads it to build the bot's knowledge.
+// (ai-worker/) also reads it to build the bot’s knowledge.
 // Image paths are relative to /public.
 // ─────────────────────────────────────────────────────────────
 
@@ -31,7 +31,7 @@ export const profile = {
 export const about = {
   heading: "Building intelligent software, end to end",
   text:
-    "I'm a Computer Science student at FAST-NUCES with hands-on experience building end-to-end AI applications, multi-agent systems and full-stack SaaS platforms. I train machine learning models, build computer-vision forensics pipelines and integrate LLMs and RAG architectures into production-ready web apps — turning complex business logic into intelligent, autonomous systems that deliver measurable impact.",
+    "I’m a Computer Science student at FAST-NUCES with hands-on experience building end-to-end AI applications, multi-agent systems and full-stack SaaS platforms. I train machine learning models, build computer-vision forensics pipelines and integrate LLMs and RAG architectures into production-ready web apps, turning complex business logic into intelligent, autonomous systems that deliver measurable impact.",
   highlights: [
     {
       icon: "cpu",
@@ -67,7 +67,7 @@ export const stats = [
 
 export const expertise = {
   text:
-    "My strongest area is applied AI — agentic pipelines, retrieval-augmented generation and ML models — backed by solid full-stack skills to ship them as real products. Click a skill to see where I stand.",
+    "My strongest area is applied AI (agentic pipelines, retrieval-augmented generation and ML models), backed by solid full-stack skills to ship them as real products. Click a skill to see where I stand.",
   skills: [
     { name: "Python", level: 85 },
     { name: "Agentic AI", level: 85 },
@@ -131,14 +131,14 @@ export const techStack = [
   { name: "Claude Code", icon: "claude", group: "Tools" },
 ];
 
-// Experience — oldest first. `label` is the big date on the left.
+// Experience, oldest first. `label` is the big date on the left.
 export const experience = [
   {
     label: "Mid 2024",
     role: "Python Developer Intern",
     company: "BIT BUILD",
     location: "Remote",
-    period: "Jul 2024 – Aug 2024",
+    period: "Jul to Aug 2024",
     summary:
       "Wrote and optimised Python programs for automation, data handling and backend processing with a remote team.",
     points: [
@@ -154,9 +154,9 @@ export const experience = [
     role: "Web Developer Intern",
     company: "CIMT Tech",
     location: "Mansehra, Pakistan",
-    period: "Jan 2025 – Feb 2025",
+    period: "Jan to Feb 2025",
     summary:
-      "Built responsive, production-ready web pages for client projects — from UI/UX designs through to the database.",
+      "Built responsive, production-ready web pages for client projects, from UI/UX designs through to the database.",
     points: [
       "Converted UI/UX designs into responsive web pages using React.js and CSS.",
       "Followed design layouts closely to keep interfaces clean, user-friendly and visually consistent.",
@@ -171,9 +171,9 @@ export const experience = [
     role: "Full Stack AI Intern",
     company: "Petalnex Pvt Ltd",
     location: "Mansehra, Pakistan",
-    period: "Jul 2026 – Aug 2026",
+    period: "Jul to Aug 2026",
     summary:
-      "Built and scaled AI-powered SaaS products on the MERN stack — from responsive interfaces to robust APIs and database design.",
+      "Built and scaled AI-powered SaaS products on the MERN stack, from responsive interfaces to robust APIs and database design.",
     points: [
       "Developed and maintained scalable SaaS applications with the MERN stack (MongoDB, Express.js, React.js, Node.js).",
       "Integrated AI features into full-stack platforms to enhance products, automate user workflows and deliver intelligent solutions.",
@@ -185,24 +185,24 @@ export const experience = [
   },
 ];
 
-// Education — oldest first
+// Education, oldest first
 export const education = [
   {
-    label: "2018 — 2020",
-    degree: "Matriculation (Science) — 85%",
+    label: "2018 to 2020",
+    degree: "Matriculation (Science), 85%",
     school: "Peace Group of Schools & Colleges",
     location: "Mansehra, Pakistan",
     details: "",
   },
   {
-    label: "2020 — 2022",
-    degree: "FSc Pre-Engineering — 89%",
+    label: "2020 to 2022",
+    degree: "FSc Pre-Engineering, 89%",
     school: "Peace Group of Schools & Colleges",
     location: "Mansehra, Pakistan",
     details: "",
   },
   {
-    label: "2023 — Now",
+    label: "2023 to now",
     degree: "BS Computer Science",
     school: "FAST-NUCES",
     location: "Peshawar, Pakistan",
@@ -212,11 +212,12 @@ export const education = [
 ];
 
 // Project categories, in display order (the toggle above the projects).
+// The first one is selected when the page opens.
 export const projectCategories = [
-  { id: "ai-agents", name: "AI Agents & LLMs" },
-  { id: "ml-vision", name: "ML & Vision" },
   { id: "saas", name: "SaaS" },
   { id: "full-stack", name: "Full Stack" },
+  { id: "ai-agents", name: "AI Agents & LLMs" },
+  { id: "ml-vision", name: "ML & Vision" },
   { id: "apps", name: "Apps" },
 ];
 
@@ -318,7 +319,7 @@ export const projects = [
     label: "AI text-to-image SaaS",
     image: "images/project-genima.webp",
     description:
-      "A SaaS text-to-image platform powered by AI models — type a prompt, get an image, with a clean real-time generation workflow.",
+      "A SaaS text-to-image platform powered by AI models: type a prompt, get an image, with a clean real-time generation workflow.",
     metrics: [],
     points: [
       "Text-to-image generation through AI model APIs with a real-time workflow.",
@@ -349,9 +350,9 @@ export const projects = [
     category: "full-stack",
     label: "Shopify · luxury lifestyle store",
     image: "images/project-estrone.webp",
-    imageNote: "Store no longer live — visual recreation of the original storefront",
+    imageNote: "Store no longer live. A visual recreation of the original storefront",
     description:
-      "A Shopify store for a local Pakistani accessories brand selling watches, earbuds and glasses — built end to end and grown with paid social ads.",
+      "A Shopify store for a local Pakistani accessories brand selling watches, earbuds and glasses, built end to end and grown with paid social ads.",
     metrics: [],
     points: [
       "Set up and customised the storefront: premium homepage, collections (Watches, Earbuds, Glasses) and product pages.",
@@ -366,12 +367,12 @@ export const projects = [
     category: "full-stack",
     label: "Shopify · premium accessories store",
     image: "images/project-holex.webp",
-    imageNote: "Store no longer live — visual recreation of the original storefront",
+    imageNote: "Store no longer live. A visual recreation of the original storefront",
     description:
-      "A Shopify store for a local Pakistani brand selling digital watches, AirPods, chains, rings and bracelets — launched and scaled with TikTok and Meta ads.",
+      "A Shopify store for a local Pakistani brand selling digital watches, AirPods, chains, rings and bracelets, launched and scaled with TikTok and Meta ads.",
     metrics: [],
     points: [
-      "Bold monochrome storefront with a 'Top Picks' grid across watches, chains, rings and bracelets.",
+      "Bold monochrome storefront with a “Top Picks” grid across watches, chains, rings and bracelets.",
       "Ran TikTok and Meta (Facebook & Instagram) ad campaigns to bring in customers and generate sales.",
       "Mobile-first collections and product pages so ad visitors reach checkout in a few taps.",
     ],
@@ -386,7 +387,7 @@ export const projects = [
     image: "",
     cover: "trading",
     description:
-      "An AI-powered trading assistant that analyses market trends and delivers smart, easy-to-understand trading signals for forex and commodities — helping traders make confident decisions without the guesswork.",
+      "An AI-powered trading assistant that analyses market trends and delivers smart, easy-to-understand trading signals for forex and commodities, helping traders make confident decisions without the guesswork.",
     metrics: [
       { value: "Forex", label: "& commodities" },
       { value: "AI", label: "Trend analysis" },
@@ -404,22 +405,22 @@ export const projects = [
 
 export const contact = {
   marqueeTop: "Got an idea worth building?",
-  marqueeBottom: "Let's make it real together —",
+  marqueeBottom: "Let’s make it real together.",
   text:
-    "I'm open to internships, full-time AI / full-stack roles and freelance projects. Whether it's an agent, a RAG system or a full web app — drop me a message and I'll get back to you.",
+    "I’m open to internships, full-time AI / full-stack roles and freelance projects. Whether it’s an agent, a RAG system or a full web app, drop me a message and I’ll get back to you.",
 };
 
 // "Ask me" AI assistant. It speaks in the first person, as Anas.
 export const assistant = {
   name: "Anas · AI",
   greeting:
-    "Hey, I'm Anas — well, my AI version 👋 Ask me anything about my projects, skills or experience and I'll answer.",
+    "Hey, I’m Anas (well, my AI version) 👋 Ask me anything about my projects, skills or experience and I’ll answer.",
   starters: [
     "What are you best at?",
     "Tell me about your AI projects",
     "Are you open to work?",
     "How can I reach you?",
   ],
-  // Topics the bot must not answer — it points people to email instead.
+  // Topics the bot must not answer; it points people to email instead.
   privateTopics: ["phone number", "home address", "salary expectations", "personal relationships"],
 };

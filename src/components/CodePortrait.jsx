@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react";
 /**
  * Portrait with a "read the source" lens (inspired by ref #1):
  * move the mouse (or a finger) over the photo and a soft circular lens follows
- * it, re-drawing the face as lines of glowing code — brighter where the face is
+ * it, re-drawing the face as lines of glowing code · brighter where the face is
  * brighter. Built with one <canvas> layered over the <img>.
  */
 
-// The code shown inside the lens — snippets from my own projects.
+// The code shown inside the lens: snippets from my own projects.
 const CODE = [
   'from langchain.agents import AgentExecutor, create_react_agent',
   'pipeline = Sequential([intake, vitals, triage, imaging, rag, planner])',
@@ -62,12 +62,12 @@ const TOKENS = CODE.map((line) => {
 
 // rgb per token kind
 const COLORS = [
-  [238, 242, 249], // plain — cream
-  [34, 211, 238], // keyword — cyan
-  [167, 139, 250], // string — violet
-  [103, 232, 249], // number — light cyan
-  [139, 151, 173], // punctuation — muted
-  [100, 116, 139], // comment — slate
+  [238, 242, 249], // plain · cream
+  [34, 211, 238], // keyword · cyan
+  [167, 139, 250], // string · violet
+  [103, 232, 249], // number · light cyan
+  [139, 151, 173], // punctuation · muted
+  [100, 116, 139], // comment · slate
 ];
 
 const FONT_SIZE = 13;
@@ -259,9 +259,8 @@ const CodePortrait = ({ src, alt, mask, className = "" }) => {
         <span
           ref={labelRef}
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 flex items-center gap-1.5 rounded-md border border-white/10 bg-ink/85 px-2 py-1 font-mono text-[11px] text-cream opacity-0 shadow-lg backdrop-blur-md transition-opacity duration-300"
+          className="pointer-events-none absolute left-0 top-0 rounded-md border border-line-strong bg-ink/85 px-2 py-1 text-xs text-cream opacity-0 backdrop-blur-md transition-opacity duration-300"
         >
-          <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
           read source
         </span>
       </div>

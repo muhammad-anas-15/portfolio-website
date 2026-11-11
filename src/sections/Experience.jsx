@@ -11,10 +11,10 @@ const ExperienceBody = (job) => (
         <h4 className="font-display text-2xl font-bold text-cream">{job.role}</h4>
         <p className="mt-1 text-lg text-accent-bright">{job.company}</p>
       </div>
-      <span className="rounded-full border border-line-strong px-3 py-1 font-mono text-[11px] text-soft">{job.period}</span>
+      <span className="rounded-full border border-line-strong px-3 py-1 text-xs text-soft">{job.period}</span>
     </div>
     {job.location && (
-      <p className="mt-2 flex items-center gap-1.5 font-mono text-xs text-muted">
+      <p className="label mt-2 flex items-center gap-1.5">
         <FiMapPin /> {job.location}
       </p>
     )}
@@ -53,8 +53,7 @@ const Experience = () => (
   <section id="experience" className="relative py-24 sm:py-32">
     <div className="container-page">
       <SectionHeading
-        eyebrow="Experience"
-        title="Where I've"
+        title="Where I’ve"
         accent="worked"
         subtitle="Internships where I shipped real features with real teams."
       />

@@ -9,7 +9,7 @@ import { askAssistant } from "../lib/assistant";
 function Inline({ text }) {
   const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
   return parts.map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**")) return <strong key={i} className="font-semibold text-cream">{part.slice(2, -2)}</strong>;
+    if (part.startsWith("**") && part.endsWith("**")) return <strong key={i} className="font-bold text-cream">{part.slice(2, -2)}</strong>;
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (link && /^(https?:|mailto:|\/)/.test(link[2])) {
       return (
@@ -127,19 +127,18 @@ const AskAI = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="flex h-[min(600px,calc(100svh-7rem))] w-[calc(100vw-2rem)] origin-bottom-right flex-col overflow-hidden rounded-3xl border border-line-strong bg-panel/95 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-2xl sm:w-[400px]"
+            className="flex h-[min(600px,calc(100svh-7rem))] w-[calc(100vw-2rem)] origin-bottom-right flex-col overflow-hidden rounded-3xl border border-line-strong bg-panel/95 shadow-float backdrop-blur-2xl sm:w-[400px]"
           >
             {/* header */}
-            <div className="flex items-center gap-3 border-b border-line bg-gradient-to-r from-accent/[0.08] to-transparent px-4 py-3.5">
+            <div className="flex items-center gap-3 border-b border-line bg-accent/[0.06] px-4 py-3.5">
               <BotAvatar size={44} mood={loading ? "thinking" : "idle"} />
               <div className="min-w-0 flex-1">
                 <p className="font-display text-[15px] font-bold text-cream">{assistant.name}</p>
                 <p className="flex items-center gap-1.5 text-xs text-muted">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  {loading ? "Typing…" : "Online · ask me anything"}
+                  {loading ? "Typing…" : "Ask me anything about my work"}
                 </p>
               </div>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="grid h-9 w-9 place-items-center rounded-full text-soft transition hover:bg-white/5 hover:text-cream">
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="grid h-9 w-9 place-items-center rounded-full text-soft transition-[background-color,color] duration-200 hover:bg-white/5 hover:text-cream">
                 <FiX />
               </button>
             </div>
@@ -156,7 +155,7 @@ const AskAI = () => {
                   </motion.div>
                 ) : (
                   <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex justify-end">
-                    <div className="max-w-[85%] rounded-2xl rounded-br-md bg-gradient-to-br from-accent-deep via-blue to-violet px-4 py-2.5 text-[14px] leading-relaxed text-white">{m.content}</div>
+                    <div className="max-w-[85%] rounded-2xl rounded-br-md bg-accent px-4 py-2.5 text-[14px] leading-relaxed text-on-accent">{m.content}</div>
                   </motion.div>
                 )
               )}
@@ -175,7 +174,7 @@ const AskAI = () => {
               {showStarters && (
                 <div className="flex flex-wrap gap-2 pl-8">
                   {assistant.starters.map((s) => (
-                    <button key={s} type="button" onClick={() => send(s)} className="rounded-full border border-accent/30 bg-accent/[0.06] px-3 py-1.5 text-left text-xs text-accent-bright transition hover:border-accent hover:bg-accent/15">
+                    <button key={s} type="button" onClick={() => send(s)} className="rounded-full border border-accent/30 bg-accent/[0.06] px-3 py-1.5 text-left text-xs text-accent-bright transition-[border-color,background-color] duration-200 hover:border-accent hover:bg-accent/15">
                       {s}
                     </button>
                   ))}
@@ -201,11 +200,11 @@ const AskAI = () => {
                   aria-label="Your question"
                   className="min-w-0 flex-1 bg-transparent text-sm text-cream placeholder:text-muted/70 focus:outline-none focus-visible:outline-none"
                 />
-                <button type="submit" disabled={!input.trim() || loading} aria-label="Send" className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-accent to-violet text-white transition hover:brightness-110 disabled:opacity-40">
+                <button type="submit" disabled={!input.trim() || loading} aria-label="Send" className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent text-on-accent transition-[background-color] duration-200 hover:bg-accent-bright disabled:opacity-55">
                   <FiArrowUp />
                 </button>
               </div>
-              <p className="mt-2 text-center text-[10.5px] text-muted/80">I'm an AI version of Anas and can make mistakes — for anything important, email me.</p>
+              <p className="mt-2 text-center text-xs text-muted">I’m an AI version of Anas and can make mistakes. For anything important, email me.</p>
             </form>
           </motion.div>
         )}
@@ -218,7 +217,7 @@ const AskAI = () => {
               initial={{ opacity: 0, y: 8, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.9 }}
-              className="absolute bottom-full right-0 mb-3 w-max max-w-[240px] rounded-2xl rounded-br-md border border-line-strong bg-panel/95 py-2.5 pl-4 pr-8 text-sm text-soft shadow-xl backdrop-blur-xl"
+              className="absolute bottom-full right-0 mb-3 w-max max-w-[240px] rounded-2xl rounded-br-md border border-line-strong bg-panel/95 py-2.5 pl-4 pr-8 text-sm text-soft backdrop-blur-xl"
             >
               Hi! Ask me anything 👋
               <button type="button" onClick={dismissTeaser} aria-label="Dismiss" className="absolute right-2 top-2 text-muted hover:text-cream">
@@ -228,21 +227,19 @@ const AskAI = () => {
           )}
         </AnimatePresence>
 
-        <motion.button
+        <button
           type="button"
           onClick={() => (open ? setOpen(false) : openChat())}
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.97 }}
+          data-magnetic="0.25"
           aria-expanded={open}
           aria-label={open ? "Close chat" : "Ask me"}
-          className="flex items-center gap-2 rounded-full border border-line-strong bg-panel/90 py-1 pl-1 pr-3.5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.9)] backdrop-blur-xl transition-colors hover:border-accent/50"
+          className="flex items-center gap-2 rounded-full border border-line-strong bg-panel/90 py-1 pl-1 pr-3.5 shadow-float backdrop-blur-xl transition-[border-color] duration-200 hover:border-accent/50"
         >
           <span className="relative">
             <BotAvatar size={36} mood={loading ? "thinking" : "idle"} />
-            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-panel bg-emerald-400" />
           </span>
-          <span className="text-sm font-semibold text-cream">{open ? "Close" : "Ask me"}</span>
-        </motion.button>
+          <span className="text-sm font-bold text-cream">{open ? "Close" : "Ask me"}</span>
+        </button>
       </div>
     </div>
   );
