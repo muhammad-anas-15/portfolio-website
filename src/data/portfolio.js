@@ -350,7 +350,6 @@ export const projects = [
     category: "full-stack",
     label: "Shopify · luxury lifestyle store",
     image: "images/project-estrone.webp",
-    imageNote: "Store no longer live. A visual recreation of the original storefront",
     description:
       "A Shopify store for a local Pakistani accessories brand selling watches, earbuds and glasses, built end to end and grown with paid social ads.",
     metrics: [],
@@ -367,7 +366,6 @@ export const projects = [
     category: "full-stack",
     label: "Shopify · premium accessories store",
     image: "images/project-holex.webp",
-    imageNote: "Store no longer live. A visual recreation of the original storefront",
     description:
       "A Shopify store for a local Pakistani brand selling digital watches, AirPods, chains, rings and bracelets, launched and scaled with TikTok and Meta ads.",
     metrics: [],

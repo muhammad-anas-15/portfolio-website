@@ -69,7 +69,7 @@ const Hero = () => {
         {/* ── Text ── */}
         <div data-scrub="hero-copy" className="order-2 lg:order-1">
           <p data-hero-hello className="text-lg text-accent">
-            Hello, I’m
+            Hello
           </p>
 
           <h1
